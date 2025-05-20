@@ -41,7 +41,7 @@
 		- `timestamp_in_ms` X está dormindo
 		- `timestamp_in_ms` X está pensando
 		- `timestamp_in_ms` X morreu
-	- Uma mensagem de estado exibida não deve ser misturada com outra mensagem.
+	- Uma memutexnsagem de estado exibida não deve ser misturada com outra mensagem.
 	- Uma mensagem anunciando a morte de um filósofo deve ser exibida no máximo 10 ms após a morte real do filósofo.
 	- Novamente, filósofos devem evitar morrer!
 	- Seu programa não deve ter nenhuma corrida de dados.
