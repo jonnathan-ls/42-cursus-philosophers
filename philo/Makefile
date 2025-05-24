@@ -6,7 +6,7 @@
 #    By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/24 12:02:46 by jlacerda          #+#    #+#              #
-#    Updated: 2025/05/24 18:55:10 by jlacerda         ###   ########.fr        #
+#    Updated: 2025/05/24 20:57:27 by jlacerda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ NAME = philo
 OBJS_DIR = ./objects
 INCS_DIR = ./includes
 
-SRCS = commons.c utils.c exit.c main.c
+SRCS = sources/commons.c sources/utils.c sources/exit.c sources/main.c 
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
