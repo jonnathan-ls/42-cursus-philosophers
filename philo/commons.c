@@ -6,34 +6,37 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/19 21:12:15 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/24 16:00:42 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
-int	ft_atoi(const char *nptr)
+/**
+ * @brief Gets the current time in milliseconds.
+ * @return The current time in milliseconds.
+ */
+size_t	get_current_time_in_ms(void)
 {
-	int	i;
-	int	sign;
-	int	result;
+	struct timeval	time;
 
-	i = 0;
-	sign = 1;
-	result = 0;
-	while (nptr[i] == ' ' || (nptr[i] >= 9 && nptr[i] <= 13))
-		i++;
-	if (nptr[i] == '-')
-	{
-		sign = -1;
-		i++;
-	}
-	else if (nptr[i] == '+')
-		i++;
-	while (ft_isdigit(nptr[i]))
-	{
-		result = result * 10 + nptr[i] - '0';
-		i++;
-	}
-	return (result * sign);
+	if (gettimeofday(&time, NULL) == -1)
+		printf(COLOR_RED GET_TIME_ERR_MSG COLOR_RESET);
+	return (time.tv_sec * 1000 + time.tv_usec / 1000);
+}
+
+/**
+ * @brief Sleeps for a specified number of milliseconds.
+ * @return The current time in milliseconds.
+ */
+int	ft_usleep( size_t milissegundos)
+{
+	size_t	start;
+	int		current_time;	
+
+	current_time = 0;
+	start = get_current_time_in_ms();
+	while ((get_current_time_in_ms() - start) < milissegundos)
+		current_time += usleep(500);
+	return (current_time);
 }
