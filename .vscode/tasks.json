@@ -1,0 +1,31 @@
+{
+	"version": "2.0.0",
+	"tasks": [
+		{
+			"label": "Build Philosophers",
+			"type": "shell",
+			"command": "make",
+			"options": {
+				"cwd": "${workspaceFolder}/philo"
+			},
+			"group": {
+				"kind": "build",
+				"isDefault": true
+			},
+			"problemMatcher": [
+				"$gcc"
+			],
+			"detail": "Compila o projeto Philosophers usando o Makefile."
+		},
+		{
+			"label": "Clean Philosophers",
+			"type": "shell",
+			"command": "make clean",
+			"group": {
+				"kind": "build",
+				"isDefault": false
+			},
+			"problemMatcher": ["$gcc"],
+		}
+	]
+}
