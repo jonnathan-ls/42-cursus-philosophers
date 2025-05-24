@@ -6,7 +6,7 @@
 #    By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/24 12:02:46 by jlacerda          #+#    #+#              #
-#    Updated: 2025/05/24 18:06:03 by jlacerda         ###   ########.fr        #
+#    Updated: 2025/05/24 18:52:50 by jlacerda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,15 +100,25 @@ re:
 	@rm -f .header_lock
 	@$(MAKE) --no-print-directory -s fclean all
 
-valgrind: all
+valgrind: fclean 
 	@rm	-f .header_lock
+	@make CFLAGS="-Wall -Wextra -Werror -g -I$(INCS_DIR)" --no-print-directory -s
+
+helgrind: valgrind
+	@echo "$(BLUE)$(BOLD)🔍 Analisando race conditions com Helgrind ...$(RESET)"
 	@valgrind -s \
 	--track-fds=yes \
 	--tool=helgrind \
+	./$(NAME) $(ARGS)
+
+memcheck: valgrind
+	@echo "$(BLUE)$(BOLD)🔍 Analisando vazamentos de memória com Memcheck ...$(RESET)"
+	@valgrind -s \
+	--tool=memcheck \
 	--leak-check=full \
 	--track-origins=yes \
 	--show-reachable=yes \
 	--show-leak-kinds=all \
-	./$(NAME)
+	./$(NAME) $(ARGS)
 
 .PHONY: all clean fclean re header
