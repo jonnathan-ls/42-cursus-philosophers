@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/24 18:12:21 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:46:54 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-typedef struct s_fork	t_fork;
-typedef struct s_philo	t_philo;
-typedef struct s_table	t_table;
+typedef struct s_fork			t_fork;
+typedef struct s_philo			t_philo;
+typedef struct s_table			t_table;
 
 typedef enum s_bool
 {
@@ -30,28 +30,38 @@ typedef enum s_bool
 	TRUE
 }	t_bool;
 
+typedef enum e_operation
+{
+	INIT,
+	LOCK,
+	UNLOCK,
+	DESTROY,
+	JOIN,
+	CREATE,
+	DETACH,
+}	t_operation;
+
 typedef struct s_fork
 {
 	int				id;
-	pthread_mutex_t	*fork;
+	pthread_mutex_t	*thread_mutex;
 }	t_fork;
 
 typedef struct s_philo
 {
 	int				id;
 	t_table			*table;
+	pthread_t		thread_id;
 	t_fork			*left_fork;
 	t_fork			*right_fork;
 	long			meals_eaten;
 	t_bool			is_satisfied;
 	long			last_meal_time;
-
-	pthread_t		thread_id;
-	int				status;
-	int				eating;
-	uint64_t		time_to_die;
-	pthread_mutex_t	lock;
 }	t_philo;
+// int				status;
+// int				eating;
+// uint64_t		time_to_die;
+// pthread_mutex_t	lock;
 
 typedef struct s_table
 {

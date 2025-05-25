@@ -6,6 +6,7 @@
 		"pthread.h": "c",
 		"time.h": "c",
 		"stdlib.h": "c",
-		"stdint.h": "c"
+		"stdint.h": "c",
+		"err.h": "c"
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/24 18:22:20 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:46:27 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,10 +57,54 @@ static void	prepare_table(t_table *table, int argc, char **argv)
 		table->amount_limit_meals = ft_atol(argv[5]);
 	else
 		table->amount_limit_meals = -1;
-	table->start_dinner_time = get_current_time_in_ms();
 }
 
-static void	prepare_dining(t_table *table, int argc, char **argv)
+static void init_philos(t_table *table)
+{
+	int		index_philo;
+	int		index_fork;
+	t_philo	*philo;
+
+	index_philo = -1;
+	while (++index_philo < table->amount_philos)
+	{
+		philo = table->philos + index_philo;
+		philo->table = table;
+		philo->thread_id = -1;
+		philo->meals_eaten = 0;
+		philo->last_meal_time = -1;
+		philo->id = index_philo + 1;
+		philo->is_satisfied = FALSE;
+		philo->right_fork = &table->forks[index_philo];
+		index_fork = (index_philo + 1) % table->amount_philos;
+		philo->left_fork = &table->forks[index_fork];
+		if (philo->id % 2 == 0)
+		{
+			philo->left_fork = &table->forks[index_philo];
+			index_fork = (index_philo + 1) % table->amount_philos;
+			philo->right_fork = &table->forks[index_fork];
+		}
+	}
+}
+
+static void	prepare_dinner(t_table *table)
+{
+	int	index;
+
+	index = -1;
+	table->start_dinner_time = get_current_time_in_ms();
+	table->forks = safe_malloc(sizeof(t_fork) * table->amount_philos, table);
+	table->philos = safe_malloc(sizeof(t_philo) * table->amount_philos, table);
+	while (++index < table->amount_philos)
+	{
+		table->forks[index].id = index;
+		table->forks[index].thread_mutex = safe_malloc(sizeof(pthread_mutex_t), table);
+		safe_mutex(INIT, table->forks[index].thread_mutex, table);
+	}
+	init_philos(table);
+}
+
+static void	validate_args(t_table *table, int argc, char **argv)
 {
 	init_table(table);
 	if (!is_valid_args(argc, argv))
@@ -85,7 +129,27 @@ int	main(int argc, char **argv)
 {
 	t_table	table;
 
-	prepare_dining(&table, argc, argv);
+	validate_args(&table, argc, argv);
 	printf("args: %d %lu %lu %lu %d\n", table.amount_philos, table.time_to_die,
 		table.time_to_eat, table.time_to_sleep, table.amount_limit_meals);
+	prepare_dinner(&table);
+	int i = 0;
+	while (i < table.amount_philos)
+	{
+		printf("forks[%d] = %d\n", i, table.forks[i].id);
+		i++;
+	}
+	i = 0;
+	while (i < table.amount_philos)
+	{
+		printf("philos[%d] = %d\n", i, table.philos[i].id);
+		printf("left_fork[%d] = %d\n", i, table.philos[i].left_fork->id);
+		printf("right_fork[%d] = %d\n", i, table.philos[i].right_fork->id);
+		printf("meals_eaten[%d] = %ld\n", i, table.philos[i].meals_eaten);
+		printf("last_meal_time[%d] = %ld\n", i, table.philos[i].last_meal_time);
+		printf("is_satisfied[%d] = %d\n", i, table.philos[i].is_satisfied);
+		printf("thread_id[%d] = %ld\n", i, table.philos[i].thread_id);
+		printf("table[%d] = %p\n", i, (void *)table.philos[i].table);
+		i++;
+	}
 }
