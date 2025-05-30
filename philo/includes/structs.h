@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/26 21:46:54 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:46:58 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,15 +65,17 @@ typedef struct s_philo
 
 typedef struct s_table
 {
-	t_fork		*forks;
-	t_philo		*philos;
-	int			amount_philos;
-	int			amount_limit_meals;
-	long		start_dinner_time;
-	t_bool		is_dinner_over;
-	uint64_t	time_to_die;
-	uint64_t	time_to_eat;
-	uint64_t	time_to_sleep;
+	t_fork			*forks;
+	t_philo			*philos;
+	int				amount_philos;
+	int				amount_limit_meals;
+	long			start_dinner_time;
+	t_bool			all_threads_ready_created;
+	pthread_mutex_t	ready_mutex;
+	t_bool			is_dinner_over;
+	uint64_t		time_to_die;
+	uint64_t		time_to_eat;
+	uint64_t		time_to_sleep;
 }	t_table;
 
 #endif

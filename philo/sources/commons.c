@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/24 16:00:42 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/26 22:07:11 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,14 @@ size_t	get_current_time_in_ms(void)
  * @brief Sleeps for a specified number of milliseconds.
  * @return The current time in milliseconds.
  */
-int	ft_usleep( size_t milissegundos)
+int	ft_usleep( size_t miliseconds)
 {
 	size_t	start;
 	int		current_time;	
 
 	current_time = 0;
 	start = get_current_time_in_ms();
-	while ((get_current_time_in_ms() - start) < milissegundos)
+	while ((get_current_time_in_ms() - start) < miliseconds)
 		current_time += usleep(500);
 	return (current_time);
 }

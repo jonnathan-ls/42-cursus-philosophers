@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/26 21:46:27 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/26 21:46:35 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ static void	init_table(t_table *table)
 	table->start_dinner_time = 0;
 	table->is_dinner_over = FALSE;
 	table->amount_limit_meals = -1;
+	table->all_threads_ready_created = FALSE;
 }
 
 static void	prepare_table(t_table *table, int argc, char **argv)
@@ -95,6 +96,7 @@ static void	prepare_dinner(t_table *table)
 	table->start_dinner_time = get_current_time_in_ms();
 	table->forks = safe_malloc(sizeof(t_fork) * table->amount_philos, table);
 	table->philos = safe_malloc(sizeof(t_philo) * table->amount_philos, table);
+	safe_mutex(INIT, &table->ready_mutex, table);
 	while (++index < table->amount_philos)
 	{
 		table->forks[index].id = index;
