@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 16:25:06 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:00:57 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	*monitor(void *arg)
 			return (NULL);
 		if (philo_is_satisfied(philo, table))
 			return (NULL);
-		usleep(1000);
+		usleep(500);
 	}
 	return (NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 16:25:06 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:18:18 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,8 +79,8 @@ void	print_status(t_philo *philo, t_status status)
 	long		timestamp;
 	static char	*status_strs[] = {
 		"has taken a fork",
-		COLOR_MAGENTA "is thinking" COLOR_RESET,
-		COLOR_YELLOW "is eating" COLOR_RESET,
+		COLOR_YELLOW "is thinking" COLOR_RESET,
+		COLOR_GREEN "is eating" COLOR_RESET,
 		COLOR_BLUE "is sleeping"	COLOR_RESET,
 		COLOR_RED "died" COLOR_RESET,
 	};

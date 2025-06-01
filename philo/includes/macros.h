@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 14:39:43 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:17:25 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,16 +26,18 @@
 # define COLOR_YELLOW "\033[33m"
 # define COLOR_BLUE "\033[34m"
 # define COLOR_MAGENTA "\033[35m"
+# define COLOR_ORANGE "\033[38;5;208m"
 # define COLOR_CYAN "\033[36m"
 
 # define MALLOC_ERR_MSG	"Error: malloc failed\n"
 # define MUTEX_ERR_MSG	"Error: Mutex operation failed\n"
 
-# define DESCRIPTION_ERR_MSG	"Considerations: \n\t\
-- <argument> means required arguments.\n\t\
-- [argument] means optional arguments.\n\t\
-- All arguments must be positive integers.\n\t\
-- The number of philosophers must be greater than 0.\n"
+# define DESCRIPTION_ERR_MSG	"Considerations: \n     \
+- <argument> means required arguments.\n     \
+- [argument] means optional arguments.\n     \
+- All arguments must be positive integers.\n     \
+- The number of philosophers must be greater than 0.\n     \
+- The time to die, eat, and sleep must be equal or greater than 60ms.\n"
 # define INVALID_ARGS_ERR_MSG	"Error: Invalid arguments\n"
 # define CORRECTLY_PROMPT_MSG	"Correctly prompt ./philo <number_of_philos> \
 <time_to_die> <time_to_eat> <time_to_sleep> [number_of_meals]\n"
@@ -45,7 +47,7 @@ Number of philosophers must be greater than 0\n"
 Number of philosophers must be less than 200\n"
 # define TIME_ARG_ERR_MSG	"Error: \
 The timestamp arguments must be greater than 60ms\n"
-
+# define THREAD_CREATE_ERR_MSG	"Error: pthread_create() failure\n"
 # define GET_TIME_ERR_MSG	"Error: gettimeofday() failure\n"
 
 /* ******************************************************************** */

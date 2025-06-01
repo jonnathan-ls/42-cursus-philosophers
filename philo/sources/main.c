@@ -6,45 +6,11 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 16:36:34 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 17:13:36 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
-
-static int	is_valid_args(int argc, char **argv)
-{
-	int	i;
-	int	j;
-
-	if (argc < 5 || argc > 6)
-		return (FALSE);
-	i = 1;
-	while (i < argc)
-	{
-		j = 0;
-		while (argv[i][j])
-		{
-			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != '+')
-				return (FALSE);
-			j++;
-		}
-		i++;
-	}
-	return (TRUE);
-}
-
-static void	validate_args_values(t_table *table)
-{
-	if (table->num_philosophers == NO_PHILOS)
-		exit_with_error(NUM_PHILOS_ERR_MSG, table);
-	if (table->num_philosophers > MAX_PHILOS)
-		exit_with_error(NUM_PHILOS_SIZE_ERR_MSG, table);
-	if (table->time_to_die < MAX_TIME_IN_MS
-		|| table->time_to_eat < MAX_TIME_IN_MS
-		|| table->time_to_sleep < MAX_TIME_IN_MS)
-		exit_with_error(TIME_ARG_ERR_MSG, table);
-}
 
 static void	prepare_dinner(t_table *table)
 {
@@ -61,10 +27,36 @@ static void	prepare_dinner(t_table *table)
 		pthread_mutex_init(&table->forks[index], NULL);
 }
 
+static t_bool	create_threads(t_table *table)
+{
+	int	index;
+	int	status;
+
+	index = -1;
+	while (++index < table->num_philosophers)
+	{
+		status = pthread_create(&table->philos[index].thread_id,
+				NULL, routine, &table->philos[index]);
+		if (status != 0)
+		{
+			printf(COLOR_RED THREAD_CREATE_ERR_MSG COLOR_RESET);
+			return (FALSE);
+		}
+		pthread_create(&table->philos[index].monitor_id, NULL,
+			monitor, &table->philos[index]);
+		if (table->num_philosophers > 50)
+			usleep(500);
+		else
+			usleep(100);
+	}
+	return (TRUE);
+}
+
 static void	execute_simulation(t_table *table)
 {
-	int		index;
+	int	index;
 
+	table->start_dinner_time = get_current_time_in_ms();
 	if (table->num_philosophers == 1)
 	{
 		print_status(&table->philos[0], TAKEN_FORKS);
@@ -72,15 +64,8 @@ static void	execute_simulation(t_table *table)
 		print_status(&table->philos[0], DEAD);
 		return ;
 	}
-	index = -1;
-	while (++index < table->num_philosophers)
-	{
-		pthread_create(&table->philos[index].thread_id, NULL,
-			routine, &table->philos[index]);
-		pthread_create(&table->philos[index].monitor_id, NULL,
-			monitor, &table->philos[index]);
-		usleep(100);
-	}
+	if (!create_threads(table))
+		return ;
 	index = -1;
 	while (++index < table->num_philosophers)
 	{
