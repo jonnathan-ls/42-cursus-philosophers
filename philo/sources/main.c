@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 21:41:40 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:51:44 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,28 +61,22 @@ static void	config_args(t_table *table, int argc, char **argv)
 
 static void	config_philos(t_table *table)
 {
-	int		index_philo;
-	int		index_fork;
 	t_philo	*philo;
+	int		index_fork;
+	int		index_philo;
 
 	index_philo = -1;
 	while (++index_philo < table->num_philosophers)
 	{
-		philo = table->philos + index_philo;
-		philo->table = table;
-		philo->thread_id = -1;
-		philo->meals_eaten = 0;
-		philo->last_meal_time = get_current_time_in_ms();
-		philo->id = index_philo + 1;
-		philo->right_fork = &table->forks[index_philo];
-		index_fork = (index_philo + 1) % table->num_philosophers;
-		philo->left_fork = &table->forks[index_fork];
-		if (philo->id % 2 == 0)
-		{
-			philo->left_fork = &table->forks[index_philo];
+			philo = table->philos + index_philo;
+			philo->table = table;
+			philo->thread_id = -1;
+			philo->meals_eaten = 0;
+			philo->last_meal_time = get_current_time_in_ms();
+			philo->id = index_philo + 1;
+			philo->right_fork = &table->forks[index_philo];
 			index_fork = (index_philo + 1) % table->num_philosophers;
-			philo->right_fork = &table->forks[index_fork];
-		}
+			philo->left_fork = &table->forks[index_fork];
 	}
 }
 
@@ -115,9 +109,8 @@ static void	validate_args_values(t_table *table)
 
 int	main(int argc, char **argv)
 {
-	pthread_t		monitor;
-	t_table			table;
-	int				index;
+	t_table	table;
+	int		index;
 
 	init_table(&table);
 	if (!is_valid_args(argc, argv))
@@ -133,21 +126,27 @@ int	main(int argc, char **argv)
 	config_philos(&table);
 	if (table.num_philosophers == 1)
 	{
-		print_status(&table.philos[0], "has taken a fork");
+		print_status(&table.philos[0], TAKING_FORKS);
 		sleep_in_ms(table.time_to_die);
-		print_status(&table.philos[0], "died");
+		print_status(&table.philos[0], DEAD);
 		free_resources(&table);
 		return (EXIT_SUCCESS);
 	}
 	index = -1;
 	while (++index < table.num_philosophers)
+	{
 		pthread_create(&table.philos[index].thread_id, NULL,
 			routine, &table.philos[index]);
-	pthread_create(&monitor, NULL, monitor_routine, &table);
+		pthread_create(&table.philos[index].monitor_id, NULL,
+			monitor_single_philo, &table.philos[index]);
+		usleep(100);
+	}
 	index = -1;
 	while (++index < table.num_philosophers)
+	{
 		pthread_join(table.philos[index].thread_id, NULL);
-	pthread_join(monitor, NULL);
+		pthread_join(table.philos[index].monitor_id, NULL);
+	}
 	free_resources(&table);
 	return (EXIT_SUCCESS);
 }

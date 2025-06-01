@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 20:57:49 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:39:43 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@
 # define COLOR_YELLOW "\033[33m"
 # define COLOR_BLUE "\033[34m"
 # define COLOR_MAGENTA "\033[35m"
+# define COLOR_CYAN "\033[36m"
 
 # define MALLOC_ERR_MSG	"Error: malloc failed\n"
 # define MUTEX_ERR_MSG	"Error: Mutex operation failed\n"

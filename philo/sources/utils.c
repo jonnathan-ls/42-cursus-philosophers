@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 21:31:44 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:52:01 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	free_memory(t_table *table)
 		return ;
 	if (table->philos)
 		free(table->philos);
-
 	if (table->forks)
 		free(table->forks);
 }
@@ -55,7 +54,6 @@ void	destroy_mutexes(t_table *table)
 
 	if (!table)
 		return ;
-	sleep_in_ms(1);
 	if (table->forks)
 	{
 		index = -1;

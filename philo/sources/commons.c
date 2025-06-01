@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 21:32:31 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:39:57 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,25 @@ size_t	get_current_time_in_ms(void)
  */
 int	sleep_in_ms( size_t miliseconds)
 {
-	size_t	start;
-	int		current_time;	
+	struct timeval	start;
+	struct timeval	current;
+	size_t			elapsed;
 
-	current_time = 0;
-	start = get_current_time_in_ms();
-	while ((get_current_time_in_ms() - start) < miliseconds)
-		current_time += usleep(100);
-	return (current_time);
+	if (miliseconds == 0)
+		return (0);
+	if (gettimeofday(&start, NULL) == -1)
+		printf(COLOR_RED GET_TIME_ERR_MSG COLOR_RESET);
+	while (TRUE)
+	{
+		if (gettimeofday(&current, NULL) == -1)
+			printf(COLOR_RED GET_TIME_ERR_MSG COLOR_RESET);
+		elapsed = (current.tv_sec - start.tv_sec) * 1000
+			+ (current.tv_usec - start.tv_usec) / 1000;
+		if (elapsed >= miliseconds)
+			break ;
+		usleep(100);
+	}
+	return (get_current_time_in_ms());
 }
 
 t_bool	should_continue(t_table *table)
@@ -62,43 +73,25 @@ void	stop_simulation(t_table *table)
 	pthread_mutex_unlock(&table->death_mutex);
 }
 
-void	print_status(t_philo *philo, char *status)
+void	print_status(t_philo *philo, t_status status)
 {
-	long	current_time;
-	t_table	*table;
+	t_table		*table;
+	long		timestamp;
+	static char	*status_strs[] = {
+		"has taken a fork",
+		COLOR_MAGENTA "is thinking" COLOR_RESET,
+		COLOR_YELLOW "is eating" COLOR_RESET,
+		COLOR_BLUE "is sleeping"	COLOR_RESET,
+		COLOR_RED "died" COLOR_RESET,
+	};
 
-	if (!philo || !status)
-		return ;
 	table = philo->table;
 	pthread_mutex_lock(&table->print_mutex);
-	current_time = get_current_time_in_ms() - table->start_dinner_time;
-	printf("%lu %d %s\n", current_time, philo->id, status);
+	if (should_continue(table) || status == DEAD)
+	{
+		timestamp = get_current_time_in_ms() - table->start_dinner_time;
+		printf(COLOR_CYAN "%ld" COLOR_RESET " %d %s\n",
+			timestamp, philo->id, status_strs[status]);
+	}
 	pthread_mutex_unlock(&table->print_mutex);
 }
-
-// void	take_forks(t_philo *philo)
-// {
-// 	t_table	*table;
-
-// 	if (!philo || philo->table)
-// 		return ;
-// 	table = philo->table;
-// 	if (!should_continue(table))
-// 		return ;
-// 	if (philo->id % 2 == 0)
-// 	{
-// 		pthread_mutex_lock(philo->left_fork);
-// 		print_status(philo, "has taken a fork");
-// 		pthread_mutex_lock(philo->right_fork);
-// 		print_status(philo, "has taken a fork");
-// 	}
-// 	else
-// 	{
-// 		pthread_mutex_lock(philo->right_fork);
-// 		print_status(philo, "has taken a fork");
-// 		pthread_mutex_lock(philo->left_fork);
-// 		print_status(philo, "has taken a fork");
-// 	}
-// }
-
-

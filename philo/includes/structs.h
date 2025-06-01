@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 21:38:43 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 14:50:22 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,9 +20,9 @@
 # include <stdlib.h>
 # include <sys/time.h>
 
-typedef struct s_fork			t_fork;
-typedef struct s_philo			t_philo;
-typedef struct s_table			t_table;
+typedef struct s_fork	t_fork;
+typedef struct s_philo	t_philo;
+typedef struct s_table	t_table;
 
 typedef enum s_bool
 {
@@ -41,6 +41,14 @@ typedef enum e_operation
 	DETACH,
 }	t_operation;
 
+typedef enum e_status
+{
+	TAKING_FORKS,
+	THINKING,
+	EATING,
+	SLEEPING,
+	DEAD
+}	t_status;
 
 typedef struct s_thread_arg
 {
@@ -58,12 +66,14 @@ typedef struct s_fork
 typedef struct s_philo
 {
 	int				id;
+	t_table			*table;
+	t_bool			is_dead;
+	pthread_t		thread_id;
+	pthread_t		monitor_id;
 	long			meals_eaten;
 	long			last_meal_time;
-	pthread_t		thread_id;
 	pthread_mutex_t	*left_fork;
 	pthread_mutex_t	*right_fork;
-	t_table			*table;
 }	t_philo;
 typedef struct s_table
 {
