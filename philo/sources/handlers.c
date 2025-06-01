@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 14:51:30 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 15:42:27 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,55 +47,36 @@
 // 	return (NULL);
 // }
 
-// int	safe_mutex(t_operation operation, pthread_mutex_t *mutex)
+// char	*mutex_handler(t_operation operation, pthread_mutex_t *mutex)
 // {
-// 	char	*err;
-
 // 	if (!mutex)
-// 	{
-// 		printf(COLOR_RED MUTEX_ERR_MSG COLOR_RESET);
-// 		return (FAILURE);
-// 	}
-// 	err = NULL;
+// 		return (MUTEX_ERR_MSG);
 // 	if (operation == INIT)
-// 		err = process_mutex_handler(pthread_mutex_init(mutex, NULL), operation);
+// 		return (process_mutex_handler(
+// 				pthread_mutex_init(mutex, NULL), operation));
 // 	else if (operation == LOCK)
-// 		err = process_mutex_handler(pthread_mutex_lock(mutex), operation);
+// 		return (process_mutex_handler(pthread_mutex_lock(mutex), operation));
 // 	else if (operation == UNLOCK)
-// 		err = process_mutex_handler(pthread_mutex_unlock(mutex), operation);
+// 		return (process_mutex_handler(pthread_mutex_unlock(mutex), operation));
 // 	else if (operation == DESTROY)
-// 		err = process_mutex_handler(pthread_mutex_destroy(mutex), operation);
-// 	if (err)
-// 	{
-// 		printf(COLOR_RED "%s" COLOR_RESET, err);
-// 		return (FAILURE);
-// 	}
-// 	return (SUCCESS);
+// 		return (process_mutex_handler(pthread_mutex_destroy(mutex), operation));
+// 	return (NULL);
 // }
 
-// int	safe_thread(t_operation operation,
+// char	*thread_handler(t_operation operation,
 // 	pthread_t *thread, void *(*function)(void	*), t_thread_arg *t_arg)
 // {
-// 	char	*err;
-
 // 	if (!thread || !t_arg || !t_arg->table)
-// 	{
-// 		printf(COLOR_RED THREAD_OPERATION_ERR_MSG COLOR_RESET);
-// 		exit(EXIT_FAILURE);
-// 	}
+// 		return (THREAD_OPERATION_ERR_MSG);
 // 	if (operation == CREATE)
-// 		err = process_thread_handler(pthread_create(thread,
-// 					NULL, function, t_arg->data), operation);
+// 		return (process_thread_handler(
+// 				pthread_create(thread, NULL, function, t_arg->data),
+// 				operation));
 // 	else if (operation == JOIN)
-// 		err = process_thread_handler(pthread_join(*thread, NULL), operation);
+// 		return (process_thread_handler(pthread_join(*thread, NULL), operation));
 // 	else if (operation == DETACH)
-// 		err = process_thread_handler(pthread_detach(*thread), operation);
+// 		return (process_thread_handler(pthread_detach(*thread), operation));
 // 	else
-// 		err = THREAD_OPERATION_ERR_MSG;
-// 	if (err)
-// 	{
-// 		printf(COLOR_RED "%s" COLOR_RESET, err);
-// 		return (FAILURE);
-// 	}
-// 	return (SUCCESS);
+// 		return (THREAD_OPERATION_ERR_MSG);
+// 	return (NULL);
 // }

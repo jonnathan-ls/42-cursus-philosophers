@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 14:39:57 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:25:06 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,9 +58,9 @@ t_bool	should_continue(t_table *table)
 
 	if (!table)
 		return (FALSE);
-	pthread_mutex_lock(&table->death_mutex);
+	pthread_mutex_lock(&table->philo_mutex);
 	result = table->simulation_running;
-	pthread_mutex_unlock(&table->death_mutex);
+	pthread_mutex_unlock(&table->philo_mutex);
 	return (result);
 }
 
@@ -68,9 +68,9 @@ void	stop_simulation(t_table *table)
 {
 	if (!table)
 		return ;
-	pthread_mutex_lock(&table->death_mutex);
+	pthread_mutex_lock(&table->philo_mutex);
 	table->simulation_running = FALSE;
-	pthread_mutex_unlock(&table->death_mutex);
+	pthread_mutex_unlock(&table->philo_mutex);
 }
 
 void	print_status(t_philo *philo, t_status status)

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 14:50:22 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:28:06 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,36 +19,11 @@
 # include <stdint.h>
 # include <stdlib.h>
 # include <sys/time.h>
+# include "enums.h"
 
 typedef struct s_fork	t_fork;
 typedef struct s_philo	t_philo;
 typedef struct s_table	t_table;
-
-typedef enum s_bool
-{
-	FALSE,
-	TRUE
-}	t_bool;
-
-typedef enum e_operation
-{
-	INIT,
-	LOCK,
-	UNLOCK,
-	DESTROY,
-	JOIN,
-	CREATE,
-	DETACH,
-}	t_operation;
-
-typedef enum e_status
-{
-	TAKING_FORKS,
-	THINKING,
-	EATING,
-	SLEEPING,
-	DEAD
-}	t_status;
 
 typedef struct s_thread_arg
 {
@@ -80,7 +55,7 @@ typedef struct s_table
 	pthread_mutex_t	*forks;
 	t_philo			*philos;
 	pthread_mutex_t	print_mutex;
-	pthread_mutex_t	death_mutex;
+	pthread_mutex_t	philo_mutex;
 	uint64_t		time_to_die;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_sleep;

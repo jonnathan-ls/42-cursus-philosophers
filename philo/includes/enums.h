@@ -1,21 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   enums.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/31 20:56:12 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/01 16:36:34 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "philo.h"
+#ifndef ENUMS_H
+# define ENUMS_H
 
-void	exit_with_error(char	*msg, t_table *table)
+typedef enum s_bool
 {
-	if (msg)
-		printf(COLOR_RED "%s" COLOR_RESET, msg);
-	free_resources(table);
-	exit(EXIT_FAILURE);
-}
+	FALSE,
+	TRUE
+}	t_bool;
+
+typedef enum e_operation
+{
+	INIT,
+	LOCK,
+	UNLOCK,
+	DESTROY,
+	JOIN,
+	CREATE,
+	DETACH,
+}	t_operation;
+
+typedef enum e_status
+{
+	TAKEN_FORKS,
+	THINKING,
+	EATING,
+	SLEEPING,
+	DEAD
+}	t_status;
+
+#endif
