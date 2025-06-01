@@ -6,13 +6,15 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/24 20:06:59 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/31 20:57:49 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
 
+# define SUCCESS	0
+# define FAILURE	1
 # define NO_PHILOS 0
 # define MAX_PHILOS 200
 # define MILLISECOND 1000
@@ -45,7 +47,6 @@ The timestamp arguments must be greater than 60ms\n"
 
 # define GET_TIME_ERR_MSG	"Error: gettimeofday() failure\n"
 
-
 /* ******************************************************************** */
 # define MUTEX_INVALID_ERR_MSG	"The value specified by mutex is invalid\n"
 # define ATTR_INVALID_ERR_MSG	"The value specified by attr is invalid\n"
@@ -65,6 +66,5 @@ to that specified by the given thread ID\n"
 # define THREAD_DEADLOCK_ERR_MSG "A deadlock was detected \
 or the value of thread specified the calling thread\n"
 # define THREAD_OPERATION_ERR_MSG "Wrong operation for thread handler\n"
-
 
 #endif

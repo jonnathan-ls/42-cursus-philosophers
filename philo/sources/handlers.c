@@ -1,97 +1,103 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   handlers.c                                         :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/24 21:19:33 by jlacerda         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+// /* ************************************************************************** */
+// /*                                                                            */
+// /*                                                        :::      ::::::::   */
+// /*   handlers.c                                         :+:      :+:    :+:   */
+// /*                                                    +:+ +:+         +:+     */
+// /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
+// /*                                                +#+#+#+#+#+   +#+           */
+// /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
+// /*   Updated: 2025/05/31 21:03:30 by jlacerda         ###   ########.fr       */
+// /*                                                                            */
+// /* ************************************************************************** */
 
-#include "philo.h"
+// #include "philo.h"
 
-static char	*process_mutex_handler(int status, t_operation operation)
-{
-	if (status == 0)
-		return (NULL);
-	if (status == EINVAL && (operation == LOCK || operation == UNLOCK))
-		return (MUTEX_INVALID_ERR_MSG);
-	else if (status == EINVAL && operation == INIT)
-		return (ATTR_INVALID_ERR_MSG);
-	else if (status == EDEADLK)
-		return (DEADLOCK_ERR_MSG);
-	else if (status == ENOMEM)
-		return (CREATE_ANOTHER_ERR_MSG);
-	else if (status == EBUSY)
-		return (MUTEX_IS_BUSY_ERR_MSG);
-	return (NULL);
-}
+// static char	*process_mutex_handler(int status, t_operation operation)
+// {
+// 	if (status == 0)
+// 		return (NULL);
+// 	if (status == EINVAL && (operation == LOCK || operation == UNLOCK))
+// 		return (MUTEX_INVALID_ERR_MSG);
+// 	else if (status == EINVAL && operation == INIT)
+// 		return (ATTR_INVALID_ERR_MSG);
+// 	else if (status == EDEADLK)
+// 		return (DEADLOCK_ERR_MSG);
+// 	else if (status == ENOMEM)
+// 		return (CREATE_ANOTHER_ERR_MSG);
+// 	else if (status == EBUSY)
+// 		return (MUTEX_IS_BUSY_ERR_MSG);
+// 	return (NULL);
+// }
 
-static char	*process_thread_handler(int status, t_operation operation)
-{
-	if (status == 0)
-		return (NULL);
-	if (status == EAGAIN)
-		return (THREAD_RESOURCES_ERR_MSG);
-	else if (status == EPERM)
-		return (THREAD_PERMISSION_ERR_MSG);
-	else if (status == EINVAL && operation == CREATE)
-		return (ATTR_INVALID_ERR_MSG);
-	else if (status == EINVAL && (operation == JOIN || operation == DETACH))
-		return (THREAD_JOIN_ERR_MSG);
-	else if (status == ESRCH)
-		return (THREAD_ID_ERR_MSG);
-	else if (status == EDEADLK)
-		return (THREAD_DEADLOCK_ERR_MSG);
-	return (NULL);
-}
+// static char	*process_thread_handler(int status, t_operation operation)
+// {
+// 	if (status == 0)
+// 		return (NULL);
+// 	if (status == EAGAIN)
+// 		return (THREAD_RESOURCES_ERR_MSG);
+// 	else if (status == EPERM)
+// 		return (THREAD_PERMISSION_ERR_MSG);
+// 	else if (status == EINVAL && operation == CREATE)
+// 		return (ATTR_INVALID_ERR_MSG);
+// 	else if (status == EINVAL && (operation == JOIN || operation == DETACH))
+// 		return (THREAD_JOIN_ERR_MSG);
+// 	else if (status == ESRCH)
+// 		return (THREAD_ID_ERR_MSG);
+// 	else if (status == EDEADLK)
+// 		return (THREAD_DEADLOCK_ERR_MSG);
+// 	return (NULL);
+// }
 
-void	safe_mutex(t_operation operation,
-	pthread_mutex_t *mutex, t_table *table)
-{
-	char	*err;
+// int	safe_mutex(t_operation operation, pthread_mutex_t *mutex)
+// {
+// 	char	*err;
 
-	if (!mutex)
-		exit_with_error("Mutex is NULL", table);
-	err = NULL;
-	if (operation == INIT)
-		err = process_mutex_handler(pthread_mutex_init(mutex, NULL), operation);
-	else if (operation == LOCK)
-		err = process_mutex_handler(pthread_mutex_lock(mutex), operation);
-	else if (operation == UNLOCK)
-		err = process_mutex_handler(pthread_mutex_unlock(mutex), operation);
-	else if (operation == DESTROY)
-		err = process_mutex_handler(pthread_mutex_destroy(mutex), operation);
-	if (err)
-		exit_with_error(err, table);
-}
+// 	if (!mutex)
+// 	{
+// 		printf(COLOR_RED MUTEX_ERR_MSG COLOR_RESET);
+// 		return (FAILURE);
+// 	}
+// 	err = NULL;
+// 	if (operation == INIT)
+// 		err = process_mutex_handler(pthread_mutex_init(mutex, NULL), operation);
+// 	else if (operation == LOCK)
+// 		err = process_mutex_handler(pthread_mutex_lock(mutex), operation);
+// 	else if (operation == UNLOCK)
+// 		err = process_mutex_handler(pthread_mutex_unlock(mutex), operation);
+// 	else if (operation == DESTROY)
+// 		err = process_mutex_handler(pthread_mutex_destroy(mutex), operation);
+// 	if (err)
+// 	{
+// 		printf(COLOR_RED "%s" COLOR_RESET, err);
+// 		return (FAILURE);
+// 	}
+// 	return (SUCCESS);
+// }
 
-void	safe_thread(t_operation operation,
-	pthread_t *thread, void *(*function)(void	*), t_table *table)
-{
-	char	*err;
+// int	safe_thread(t_operation operation,
+// 	pthread_t *thread, void *(*function)(void	*), t_thread_arg *t_arg)
+// {
+// 	char	*err;
 
-	if (operation == CREATE)
-		err = process_thread_handler(pthread_create(thread,
-					NULL, function, table), operation);
-	else if (operation == JOIN)
-		err = process_thread_handler(pthread_join(*thread, NULL), operation);
-	else if (operation == DETACH)
-		err = process_thread_handler(pthread_detach(*thread), operation);
-	else
-		err = THREAD_OPERATION_ERR_MSG;
-	if (err)
-		exit_with_error(err, table);
-}
+// 	if (!thread || !t_arg || !t_arg->table)
+// 	{
+// 		printf(COLOR_RED THREAD_OPERATION_ERR_MSG COLOR_RESET);
+// 		exit(EXIT_FAILURE);
+// 	}
+// 	if (operation == CREATE)
+// 		err = process_thread_handler(pthread_create(thread,
+// 					NULL, function, t_arg->data), operation);
+// 	else if (operation == JOIN)
+// 		err = process_thread_handler(pthread_join(*thread, NULL), operation);
+// 	else if (operation == DETACH)
+// 		err = process_thread_handler(pthread_detach(*thread), operation);
+// 	else
+// 		err = THREAD_OPERATION_ERR_MSG;
+// 	if (err)
+// 	{
+// 		printf(COLOR_RED "%s" COLOR_RESET, err);
+// 		return (FAILURE);
+// 	}
+// 	return (SUCCESS);
+// }
 
-void	*safe_malloc(size_t size, t_table *table)
-{
-	void	*ptr;
-
-	ptr = malloc(size);
-	if (!ptr)
-		exit_with_error(MALLOC_ERR_MSG, table);
-	return (ptr);
-}

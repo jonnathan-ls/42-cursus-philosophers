@@ -6,7 +6,7 @@
 #    By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/24 12:02:46 by jlacerda          #+#    #+#              #
-#    Updated: 2025/05/29 18:46:48 by jlacerda         ###   ########.fr        #
+#    Updated: 2025/05/31 20:11:59 by jlacerda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ OBJS_DIR = ./objects
 INCS_DIR = ./includes
 
 SRCS = sources/commons.c sources/utils.c sources/exit.c \
-	sources/handlers.c sources/main.c 
+	sources/handlers.c sources/main.c sources/routine.c
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 

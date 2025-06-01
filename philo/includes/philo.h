@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/05/26 21:49:28 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/05/31 21:32:40 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,23 +17,25 @@
 # include "structs.h"
 # include <errno.h>
 
-long		ft_atol(const char *nptr);
-size_t		get_current_time_in_ms(void);
-int			ft_usleep( size_t milissegundos);
-void		exit_with_error(char *msg, t_table *table);
-
-void	*safe_malloc(size_t size, t_table *table);
-void	safe_mutex(t_operation operation,
-	pthread_mutex_t *mutex, t_table *table);
-void	safe_thread(t_operation operation,
-	pthread_t *thread, void *(*function)(void	*), t_table *table);
-
-
-// Setters and Getters
-void	set_bool(pthread_mutex_t *mutex, t_bool *var, t_bool value);
+void	*routine(void *arg);
+long	ft_atol(const char *nptr);
+// void	take_forks(t_philo *philo);
+void	free_memory(t_table *table);
+void	destroy_mutexes(t_table *table);
+void	*monitor_routine(void *arg);
+size_t	get_current_time_in_ms(void);
+void	free_resources(t_table *table);
+t_bool	should_continue(t_table *table);
+void	stop_simulation(t_table *table);
+int		sleep_in_ms( size_t milissegundos);
+void	exit_with_error(char *msg, t_table *table);
+void	print_status(t_philo *philo, char *status);
+long	get_long(pthread_mutex_t *mutex, long *value);
 t_bool	get_bool(pthread_mutex_t *mutex, t_bool *value);
 void	set_long(pthread_mutex_t *mutex, long *var, long value);
-long	get_long(pthread_mutex_t *mutex, long *value);
-t_bool	is_simulation_finished(t_table *table);
+void	set_bool(pthread_mutex_t *mutex, t_bool *var, t_bool value);
+// int		safe_mutex(t_operation operation, pthread_mutex_t *mutex);
+// int		safe_thread(t_operation operation, pthread_t *thread,
+// 			void *(*function)(void	*), t_thread_arg *t_arg);
 
 #endif
