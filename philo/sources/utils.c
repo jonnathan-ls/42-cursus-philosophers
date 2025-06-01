@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 17:03:42 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 19:58:35 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,7 +82,10 @@ void	free_resources(t_table *table)
 	{
 		index = -1;
 		while (++index < table->num_philosophers)
+		{
 			pthread_mutex_destroy(&table->forks[index]);
+			pthread_mutex_destroy(&table->philos[index].meal_mutex);
+		}
 		free(table->forks);
 		table->forks = NULL;
 	}

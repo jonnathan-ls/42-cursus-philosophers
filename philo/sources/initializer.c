@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 16:24:20 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:01:29 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,8 +21,8 @@ void	init_table(t_table *table)
 	table->time_to_sleep = 0;
 	table->meals_required = -1;
 	table->num_philosophers = 0;
-	table->start_dinner_time = 0;
-	table->simulation_running = TRUE;
+	table->dinner_in_progress = TRUE;
+	table->start_dinner_time = get_current_time_in_ms();
 }
 
 void	init_args(t_table *table, int argc, char **argv)
@@ -50,7 +50,7 @@ void	init_philos(t_table *table)
 		philo->table = table;
 		philo->thread_id = -1;
 		philo->meals_eaten = 0;
-		philo->last_meal_time = get_current_time_in_ms();
+		philo->last_meal_time = table->start_dinner_time;
 		philo->id = index_philo + 1;
 		philo->right_fork = &table->forks[index_philo];
 		index_fork = (index_philo + 1) % table->num_philosophers;

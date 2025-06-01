@@ -6,28 +6,27 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 17:17:25 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:50:48 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
 
-# define SUCCESS	0
-# define FAILURE	1
+# define SUCCESS 0
+# define FAILURE 1
 # define NO_PHILOS 0
 # define MAX_PHILOS 200
-# define MILLISECOND 1000
 # define MAX_TIME_IN_MS 60
 
-# define COLOR_RESET "\033[0m"
 # define COLOR_RED "\033[31m"
+# define COLOR_CYAN "\033[36m"
+# define COLOR_BLUE "\033[34m"
+# define COLOR_RESET "\033[0m"
 # define COLOR_GREEN "\033[32m"
 # define COLOR_YELLOW "\033[33m"
-# define COLOR_BLUE "\033[34m"
 # define COLOR_MAGENTA "\033[35m"
 # define COLOR_ORANGE "\033[38;5;208m"
-# define COLOR_CYAN "\033[36m"
 
 # define MALLOC_ERR_MSG	"Error: malloc failed\n"
 # define MUTEX_ERR_MSG	"Error: Mutex operation failed\n"

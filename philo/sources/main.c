@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/01 17:13:36 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 20:53:49 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,8 @@ static void	prepare_dinner(t_table *table)
 	int	index;
 
 	index = -1;
-	table->forks = malloc(sizeof(t_fork) * table->num_philosophers);
+	table->start_dinner_time = get_current_time_in_ms();
+	table->forks = malloc(sizeof(pthread_mutex_t) * table->num_philosophers);
 	table->philos = malloc(sizeof(t_philo) * table->num_philosophers);
 	if (!table->forks || !table->philos)
 		exit_with_error(MALLOC_ERR_MSG, table);
@@ -36,18 +37,12 @@ static t_bool	create_threads(t_table *table)
 	while (++index < table->num_philosophers)
 	{
 		status = pthread_create(&table->philos[index].thread_id,
-				NULL, routine, &table->philos[index]);
+				NULL, philo_routine, &table->philos[index]);
 		if (status != 0)
 		{
 			printf(COLOR_RED THREAD_CREATE_ERR_MSG COLOR_RESET);
 			return (FALSE);
 		}
-		pthread_create(&table->philos[index].monitor_id, NULL,
-			monitor, &table->philos[index]);
-		if (table->num_philosophers > 50)
-			usleep(500);
-		else
-			usleep(100);
 	}
 	return (TRUE);
 }
@@ -56,7 +51,6 @@ static void	execute_simulation(t_table *table)
 {
 	int	index;
 
-	table->start_dinner_time = get_current_time_in_ms();
 	if (table->num_philosophers == 1)
 	{
 		print_status(&table->philos[0], TAKEN_FORKS);
@@ -66,12 +60,10 @@ static void	execute_simulation(t_table *table)
 	}
 	if (!create_threads(table))
 		return ;
+	monitor_philos(table);
 	index = -1;
 	while (++index < table->num_philosophers)
-	{
 		pthread_join(table->philos[index].thread_id, NULL);
-		pthread_join(table->philos[index].monitor_id, NULL);
-	}
 }
 
 int	main(int argc, char **argv)
