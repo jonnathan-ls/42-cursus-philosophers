@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 19:53:14 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:57:02 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void		*monitor_philos(t_table *table);
 void		stop_simulation(t_table *table);
 uint64_t	sleep_in_ms(uint64_t time_ms);
 t_bool		should_continue(t_table *table);
+char		*get_status_message(t_status status);
 int			is_valid_args(int argc, char **argv);
-void		validate_args_values(t_table *table);
-void		exit_with_error(char *msg, t_table *table);
+void		exit_with_error(char	*msg, t_table *table);
 void		print_status(t_philo *philo, t_status status);
 void		init_args(t_table *table, int argc, char **argv);
 

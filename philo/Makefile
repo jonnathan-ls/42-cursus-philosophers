@@ -6,7 +6,7 @@
 #    By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/24 12:02:46 by jlacerda          #+#    #+#              #
-#    Updated: 2025/06/07 20:54:13 by jlacerda         ###   ########.fr        #
+#    Updated: 2025/06/08 16:28:55 by jlacerda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ SRCS = sources/commons.c sources/utils.c sources/monitor.c \
 
 OBJS = $(SRCS:%.c=$(OBJS_DIR)/%.o)
 
-CFLAGS = -Wall -Wextra -Werror -g -pthread -fsanitize=thread -I$(INCS_DIR)
+CFLAGS = -Wall -Wextra -Werror -g -pthread -I$(INCS_DIR)
 
 RESET = \033[0m
 BOLD = \033[1m
@@ -34,6 +34,8 @@ WHITE = \033[37m
 TOTAL_FILES := $(words $(SRCS))
 BAR_LENGTH = $(TOTAL_FILES)
 COMPILED_COUNT = 0
+
+CSS ?= true
 
 all: header $(NAME)
 
@@ -57,7 +59,11 @@ $(OBJS_DIR)/%.o: %.c
 	@mkdir -p $(dir $@)
 	@$(eval COMPILED_COUNT=$(shell echo $$(($(COMPILED_COUNT)+1))))
 	@$(eval SHORT_PATH=$(shell echo $< | sed 's|sources/||'))
+ifeq ($(CSS), false)
+	@$(CC) $(CFLAGS) -DCSS=0 -c $< -o $@
+else
 	@$(CC) $(CFLAGS) -c $< -o $@
+endif
 	@if [ $(COMPILED_COUNT) -eq 1 ]; then \
 		echo ""; \
 		printf "$(BLUE)$(BOLD)🏗️   Compilando Philosophers $(RESET)\n"; \

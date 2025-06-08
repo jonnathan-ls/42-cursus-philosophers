@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 19:58:35 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:31:43 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,16 +60,12 @@ int	is_valid_args(int argc, char **argv)
 	return (TRUE);
 }
 
-void	validate_args_values(t_table *table)
+void	exit_with_error(char	*msg, t_table *table)
 {
-	if (table->num_philosophers == NO_PHILOS)
-		exit_with_error(NUM_PHILOS_ERR_MSG, table);
-	if (table->num_philosophers > MAX_PHILOS)
-		exit_with_error(NUM_PHILOS_SIZE_ERR_MSG, table);
-	if (table->time_to_die < MAX_TIME_IN_MS
-		|| table->time_to_eat < MAX_TIME_IN_MS
-		|| table->time_to_sleep < MAX_TIME_IN_MS)
-		exit_with_error(TIME_ARG_ERR_MSG, table);
+	if (msg)
+		printf(COLOR_RED "%s" COLOR_RESET, msg);
+	free_resources(table);
+	exit(EXIT_FAILURE);
 }
 
 void	free_resources(t_table *table)
@@ -98,10 +94,26 @@ void	free_resources(t_table *table)
 	}
 }
 
-void	exit_with_error(char	*msg, t_table *table)
+char	*get_status_message(t_status status)
 {
-	if (msg)
-		printf(COLOR_RED "%s" COLOR_RESET, msg);
-	free_resources(table);
-	exit(EXIT_FAILURE);
+	char	*messages[6];
+	
+	messages[TAKEN_FORKS] = " 🍴 has taken a fork";
+	messages[DEAD] = COLOR_RED " 💀 DIED" COLOR_RESET;
+	messages[TIMESTAMP] = COLOR_CYAN "⏳ %ld" COLOR_RESET;
+	messages[PHILO_ID] = COLOR_MAGENTA " 👤 %d" COLOR_RESET;
+	messages[EATING] = COLOR_GREEN " 🍝 is eating" COLOR_RESET;
+	messages[SLEEPING] = COLOR_BLUE " 🛌 is sleeping" COLOR_RESET;
+	messages[THINKING] = COLOR_YELLOW " 💭 is thinking" COLOR_RESET;
+	if (!CSS)
+	{
+		messages[DEAD] = " died";
+		messages[PHILO_ID] = " %d";
+		messages[TIMESTAMP] = "%ld";
+		messages[EATING] = " is eating";
+		messages[THINKING] = " is thinking";
+		messages[SLEEPING] = " is sleeping";
+		messages[TAKEN_FORKS] = " has taken a fork";
+	}
+	return	(messages[status]);
 }

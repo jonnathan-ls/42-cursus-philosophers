@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 15:07:39 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:14:12 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,21 +73,15 @@ void	print_status(t_philo *philo, t_status status)
 {
 	t_table		*table;
 	uint64_t	timestamp;
-	static char	*status_strs[] = {
-		"has taken a fork",
-		COLOR_YELLOW "is thinking" COLOR_RESET,
-		COLOR_GREEN "is eating" COLOR_RESET,
-		COLOR_BLUE "is sleeping"	COLOR_RESET,
-		COLOR_RED "died" COLOR_RESET,
-	};
 
 	table = philo->table;
 	pthread_mutex_lock(&table->print_mutex);
 	if (status == DEAD || should_continue(table))
 	{
 		timestamp = get_current_time_in_ms() - table->start_dinner_time;
-		printf(COLOR_CYAN "%ld" COLOR_RESET " %d %s\n",
-			timestamp, philo->id, status_strs[status]);
+		printf(get_status_message(TIMESTAMP), timestamp);
+		printf(get_status_message(PHILO_ID), philo->id);
+		printf("%s\n", get_status_message(status));
 	}
 	pthread_mutex_unlock(&table->print_mutex);
 }

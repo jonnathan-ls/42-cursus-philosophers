@@ -6,18 +6,23 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 15:07:00 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:36:49 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
 
+#ifndef CSS
+# define CSS 1
+#endif
+
 # define SUCCESS 0
 # define FAILURE 1
 # define NO_PHILOS 0
 # define MAX_PHILOS 200
 # define MAX_TIME_IN_MS 60
+# define MARGIN_ERR_DEAD_MS 1
 
 # define COLOR_RED "\033[31m"
 # define COLOR_CYAN "\033[36m"

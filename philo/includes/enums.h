@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 20:49:45 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:06:35 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,9 @@ typedef enum e_status
 	THINKING,
 	EATING,
 	SLEEPING,
-	DEAD
+	DEAD,
+	TIMESTAMP,
+	PHILO_ID,
 }	t_status;
 
 #endif

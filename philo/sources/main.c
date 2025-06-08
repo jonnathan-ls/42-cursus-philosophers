@@ -6,11 +6,23 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:53:28 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:38:36 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+static void	validate_args_values(t_table *table)
+{
+	if (table->num_philosophers == NO_PHILOS)
+		exit_with_error(NUM_PHILOS_ERR_MSG, table);
+	if (table->num_philosophers > MAX_PHILOS)
+		exit_with_error(NUM_PHILOS_SIZE_ERR_MSG, table);
+	if (table->time_to_die < MAX_TIME_IN_MS
+		|| table->time_to_eat < MAX_TIME_IN_MS
+		|| table->time_to_sleep < MAX_TIME_IN_MS)
+		exit_with_error(TIME_ARG_ERR_MSG, table);
+}
 
 static void	prepare_dinner(t_table *table)
 {

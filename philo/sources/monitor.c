@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 15:16:54 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 16:34:47 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ static t_bool	philo_is_dead(t_philo *philo, t_table *table)
 	pthread_mutex_unlock(&philo->meal_mutex);
 	current_time = get_current_time_in_ms();
 	time_difference = current_time - last_meal_time;
-	if (time_difference > table->time_to_die + 10)
+	if (time_difference > table->time_to_die + MARGIN_ERR_DEAD_MS)
 	{
 		stop_simulation(table);
 		print_status(philo, DEAD);
