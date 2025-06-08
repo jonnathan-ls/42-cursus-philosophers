@@ -32,7 +32,7 @@ void	*philo_routine(void *arg)
 	{
 		pthread_mutex_lock(philo->left_fork);
 		print_status(philo, TAKEN_FORKS);
-		sleep_in_ms(philo->table->time_to_die + 10);
+		sleep_in_ms(philo->table->time_to_die);
 		pthread_mutex_unlock(philo->left_fork);
 		return (NULL);
 	}

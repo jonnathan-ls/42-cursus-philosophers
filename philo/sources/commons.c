@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 22:13:24 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:07:39 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,22 +14,37 @@
 
 uint64_t	get_current_time_in_ms(void)
 {
-	struct timeval	time;
+	struct timeval time;
 
-	if (gettimeofday(&time, NULL) == -1)
+	if (gettimeofday(&time, NULL) == -1) {
 		printf(COLOR_RED GET_TIME_ERR_MSG COLOR_RESET);
+		return (0);
+	}
+	if (time.tv_sec < 0 || time.tv_usec < 0) {
+		printf(COLOR_RED TIME_EVAL_VALUES_ERR_MSG COLOR_RESET
+			"tv_sec=%ld, tv_usec=%ld\n", time.tv_sec, time.tv_usec);
+		return (0);
+	}
 	return (time.tv_sec * 1000 + time.tv_usec / 1000);
 }
 
 uint64_t	sleep_in_ms(uint64_t time_ms)
 {
-	uint64_t	start;
+	uint64_t	start_ms;
+	uint64_t	elapsed_ms;
+	uint64_t	current_time;
 
 	if (time_ms == 0)
 		return (0);
-	start = get_current_time_in_ms();
-	while (get_current_time_in_ms() - start < time_ms)
-		usleep(100);
+	start_ms = get_current_time_in_ms();
+	while (TRUE)
+	{
+		usleep(time_ms / 10);
+		current_time = get_current_time_in_ms();
+		elapsed_ms = current_time - start_ms;
+		if (elapsed_ms >= time_ms)
+			break ;
+	}
 	return (get_current_time_in_ms());
 }
 

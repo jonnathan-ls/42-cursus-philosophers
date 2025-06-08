@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 20:50:48 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/08 15:07:00 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ Number of philosophers must be less than 200\n"
 The timestamp arguments must be greater than 60ms\n"
 # define THREAD_CREATE_ERR_MSG	"Error: pthread_create() failure\n"
 # define GET_TIME_ERR_MSG	"Error: gettimeofday() failure\n"
-
+# define TIME_EVAL_VALUES_ERR_MSG	"Error: timeval values are invalid "
 /* ******************************************************************** */
 # define MUTEX_INVALID_ERR_MSG	"The value specified by mutex is invalid\n"
 # define ATTR_INVALID_ERR_MSG	"The value specified by attr is invalid\n"
