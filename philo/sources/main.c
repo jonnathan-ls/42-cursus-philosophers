@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 20:53:49 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:53:28 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,21 +49,17 @@ static t_bool	create_threads(t_table *table)
 
 static void	execute_simulation(t_table *table)
 {
-	int	index;
+	int			index;
+	pthread_t	monitor_thread;
 
-	if (table->num_philosophers == 1)
-	{
-		print_status(&table->philos[0], TAKEN_FORKS);
-		sleep_in_ms(table->time_to_die);
-		print_status(&table->philos[0], DEAD);
-		return ;
-	}
 	if (!create_threads(table))
 		return ;
-	monitor_philos(table);
+	pthread_create(&monitor_thread, NULL,
+		(void *(*)(void *))monitor_philos, table);
 	index = -1;
 	while (++index < table->num_philosophers)
 		pthread_join(table->philos[index].thread_id, NULL);
+	pthread_join(monitor_thread, NULL);
 }
 
 int	main(int argc, char **argv)

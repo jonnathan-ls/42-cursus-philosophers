@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:23:46 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 21:56:47 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,16 @@
 
 static t_bool	philo_is_dead(t_philo *philo, t_table *table)
 {
-	uint64_t	time_since_last_meal;
+	uint64_t	current_time;
+	uint64_t	last_meal_time;
+	uint64_t	time_difference;
 
 	pthread_mutex_lock(&philo->meal_mutex);
-	time_since_last_meal = get_current_time_in_ms() - philo->last_meal_time;
+	last_meal_time = philo->last_meal_time;
 	pthread_mutex_unlock(&philo->meal_mutex);
-	if (time_since_last_meal > table->time_to_die)
+	current_time = get_current_time_in_ms();
+	time_difference = current_time - last_meal_time;
+	if (time_difference > table->time_to_die)
 	{
 		stop_simulation(table);
 		print_status(philo, DEAD);
@@ -46,7 +50,7 @@ static t_bool	should_end_dinner(t_philo *philos, t_table *table)
 			meals_eaten = philos[i].meals_eaten;
 			pthread_mutex_unlock(&philos[i].meal_mutex);
 			if (meals_eaten >= table->meals_required)
-			all_satisfied++;
+				all_satisfied++;
 		}
 	}
 	if (table->meals_required != -1 && all_satisfied == table->num_philosophers)
@@ -63,6 +67,6 @@ void	*monitor_philos(t_table *table)
 
 	philos = table->philos;
 	while (!should_end_dinner(philos, table))
-		sleep_in_ms(1);
+		usleep(100);
 	return (NULL);
 }

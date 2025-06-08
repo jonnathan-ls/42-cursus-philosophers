@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:07:48 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/07 22:13:24 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ uint64_t	sleep_in_ms(uint64_t time_ms)
 		return (0);
 	start = get_current_time_in_ms();
 	while (get_current_time_in_ms() - start < time_ms)
-		usleep(time_ms / 10);
+		usleep(100);
 	return (get_current_time_in_ms());
 }
 
@@ -68,7 +68,7 @@ void	print_status(t_philo *philo, t_status status)
 
 	table = philo->table;
 	pthread_mutex_lock(&table->print_mutex);
-	if (should_continue(table) && status != DEAD)
+	if (status == DEAD || should_continue(table))
 	{
 		timestamp = get_current_time_in_ms() - table->start_dinner_time;
 		printf(COLOR_CYAN "%ld" COLOR_RESET " %d %s\n",
