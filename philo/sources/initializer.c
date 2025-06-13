@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 21:24:27 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:42:09 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,10 +29,10 @@ void	init_table(t_table *table)
 	table->time_to_sleep = 0;
 	table->meals_required = -1;
 	table->num_philosophers = 0;
+	table->start_dinner_time = 0;
 	table->dinner_in_progress = TRUE;
 	pthread_mutex_init(&table->print_mutex, NULL);
 	pthread_mutex_init(&table->philo_mutex, NULL);
-	table->start_dinner_time = get_current_time_in_ms();
 }
 
 /**
