@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 21:15:51 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:19:01 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,7 +95,7 @@ void	exit_with_error(char	*msg, t_table *table)
  * and frees the memory allocated for forks and philosophers.
  * @param table Pointer to the table struct to free resources for.
  */
-void	free_resources(t_table *table, t_bool destroy_mutexes)
+void	free_resources(t_table *table)
 {
 	int	index;
 

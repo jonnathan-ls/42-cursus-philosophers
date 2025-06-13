@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 21:15:57 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:18:06 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,8 +52,6 @@ static void	prepare_dinner(t_table *table)
 	table->philos = malloc(sizeof(t_philo) * table->num_philosophers);
 	if (!table->forks || !table->philos)
 		exit_with_error(MALLOC_ERR_MSG, table);
-	pthread_mutex_init(&table->print_mutex, NULL);
-	pthread_mutex_init(&table->philo_mutex, NULL);
 	while (++index < table->num_philosophers)
 		pthread_mutex_init(&table->forks[index], NULL);
 }
