@@ -6,12 +6,20 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 16:38:36 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:15:57 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Validates the command line arguments.
+ * Checks if the number of arguments is correct,
+ * and if each argument is a valid positive integer.
+ * @param argc The number of command line arguments.
+ * @param argv The command line arguments.
+ * @return TRUE if the arguments are valid, FALSE otherwise.
+ */
 static void	validate_args_values(t_table *table)
 {
 	if (table->num_philosophers == NO_PHILOS)
@@ -24,6 +32,16 @@ static void	validate_args_values(t_table *table)
 		exit_with_error(TIME_ARG_ERR_MSG, table);
 }
 
+/**
+ * @brief Prepares the dinner by initializing the forks and philosophers.
+ * Allocates memory for the forks and philosophers,
+ * initializes the print and philosopher mutexes,
+ * and sets the start dinner time to the current time.
+ * @param table Pointer to the table struct.
+ * @note This function allocates memory for the forks and philosophers,
+ * and initializes the mutexes used for synchronization.
+ * If memory allocation fails, it exits with an error message.
+ */
 static void	prepare_dinner(t_table *table)
 {
 	int	index;
@@ -40,6 +58,13 @@ static void	prepare_dinner(t_table *table)
 		pthread_mutex_init(&table->forks[index], NULL);
 }
 
+/**
+ * @brief Creates threads for each philosopher.
+ * Each philosopher is assigned a thread that runs the philo_routine function.
+ * If thread creation fails, it prints an error message and returns FALSE.
+ * @param table Pointer to the table struct containing the philosophers.
+ * @return TRUE if all threads are created successfully, FALSE otherwise.
+ */
 static t_bool	create_threads(t_table *table)
 {
 	int	index;
@@ -59,6 +84,12 @@ static t_bool	create_threads(t_table *table)
 	return (TRUE);
 }
 
+/**
+ * @brief Executes the simulation by creating threads for each philosopher
+ * and starting the monitor thread.
+ * Waits for all philosopher threads to finish before exiting.
+ * @param table Pointer to the table struct containing the philosophers.
+ */
 static void	execute_simulation(t_table *table)
 {
 	int			index;
@@ -74,6 +105,12 @@ static void	execute_simulation(t_table *table)
 	pthread_join(monitor_thread, NULL);
 }
 
+/**
+ * @brief Main function of the philosopher simulation.
+ * Initializes the table, validates the command line arguments,
+ * prepares the dinner by initializing forks and philosophers,
+ * and executes the simulation.
+ */
 int	main(int argc, char **argv)
 {
 	t_table	table;

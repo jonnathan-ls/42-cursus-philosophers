@@ -6,12 +6,24 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 16:34:47 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:43:27 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"philo.h"
 
+/**
+ * @brief Checks if a philosopher is dead.
+ * Locks the meal mutex to safely access the last meal time,
+ * calculates the time difference between the current time
+ * and the last meal time, and checks if it exceeds the time to die.
+ * If the philosopher is dead, stops the simulation and prints the status.
+ * @param philo Pointer to the philosopher struct.
+ * @param table Pointer to the table struct containing the philosopher.
+ * @return TRUE if the philosopher is dead, FALSE otherwise.
+ * * @note The function uses a margin of error
+ * to account for timing inaccuracies.
+ */
 static t_bool	philo_is_dead(t_philo *philo, t_table *table)
 {
 	uint64_t	current_time;
@@ -32,6 +44,18 @@ static t_bool	philo_is_dead(t_philo *philo, t_table *table)
 	return (FALSE);
 }
 
+/**
+ * @brief Checks if the dinner should end.
+ * Iterates through all philosophers to check if any philosopher is dead.
+ * If the meals_required is set, it checks if all philosophers
+ * have eaten the required number of meals.
+ * If all conditions are met, it stops the simulation and returns TRUE.
+ * @param philos Pointer to the array of philosophers.
+ * @param table Pointer to the table struct containing the philosophers.
+ * @return TRUE if the dinner should end, FALSE otherwise.
+ * @note The function uses a mutex to safely access the meals_eaten count
+ * for each philosopher.
+ */
 static t_bool	should_end_dinner(t_philo *philos, t_table *table)
 {
 	int		i;
@@ -61,6 +85,13 @@ static t_bool	should_end_dinner(t_philo *philos, t_table *table)
 	return (FALSE);
 }
 
+/**
+ * @brief Monitors the philosophers during the dinner.
+ * Continuously checks if any philosopher is dead or if all philosophers
+ * have eaten the required number of meals. If any condition is met,
+ * it stops the simulation and exits the monitoring thread.
+ * @param table Pointer to the table struct containing the philosophers.
+ */
 void	*monitor_philos(t_table *table)
 {
 	t_philo		*philos;

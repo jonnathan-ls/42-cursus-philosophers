@@ -6,16 +6,16 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 16:36:49 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:46:25 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef MACROS_H
 # define MACROS_H
 
-#ifndef CSS
-# define CSS 1
-#endif
+# ifndef CSS
+#  define CSS 1
+# endif
 
 # define SUCCESS 0
 # define FAILURE 1

@@ -6,12 +6,20 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:01:29 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:15:47 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
 
+/**
+ * @brief Initializes the table struct with default values.
+ * Sets the forks and philosophers pointers to NULL,
+ * initializes time values to 0, sets meals_required to -1,
+ * and sets dinner_in_progress to TRUE.
+ * Also sets the start_dinner_time to the current time in milliseconds.
+ * @param table Pointer to the table struct to initialize.
+ */
 void	init_table(t_table *table)
 {
 	table->forks = NULL;
@@ -25,6 +33,14 @@ void	init_table(t_table *table)
 	table->start_dinner_time = get_current_time_in_ms();
 }
 
+/**
+ * @brief Initializes the arguments for the table struct.
+ * Parses the command line arguments and sets the corresponding
+ * values in the table struct.
+ * @param table Pointer to the table struct to initialize.
+ * @param argc The number of command line arguments.
+ * @param argv The command line arguments.
+ */
 void	init_args(t_table *table, int argc, char **argv)
 {
 	table->num_philosophers = ft_atol(argv[1]);
@@ -37,6 +53,13 @@ void	init_args(t_table *table, int argc, char **argv)
 		table->meals_required = -1;
 }
 
+/**
+ * @brief Initializes the philosophers in the table struct.
+ * Sets the table pointer, thread ID, meals eaten count,
+ * last meal time, philosopher ID, and the left and right forks
+ * for each philosopher.
+ * @param table Pointer to the table struct containing the philosophers.
+ */
 void	init_philos(t_table *table)
 {
 	t_philo	*philo;

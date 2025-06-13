@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/08 16:31:43 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 21:15:51 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,18 @@ long	ft_atol(const char *nptr)
 	return (result * sign);
 }
 
+/**
+ * @brief Checks if the command line arguments are valid.
+ * Validates the number of arguments and checks if each argument
+ * is a positive integer or a positive integer with a '+' sign.
+ * @param argc The number of command line arguments.
+ * @param argv The command line arguments.
+ * @return TRUE if the arguments are valid, FALSE otherwise.
+ * @note The function checks if the number of arguments is between 5 and 6,
+ * and if each argument is a valid positive integer.
+ * It returns FALSE if any argument is invalid or if the number of arguments
+ * is not within the expected range.
+ */
 int	is_valid_args(int argc, char **argv)
 {
 	int	i;
@@ -60,6 +72,15 @@ int	is_valid_args(int argc, char **argv)
 	return (TRUE);
 }
 
+/**
+ * @brief Exits the program with an error message.
+ * This function prints the provided error message in red,
+ * frees the resources allocated for the table struct,
+ * and then exits the program with a failure status.
+ * @param msg The error message to print.
+ * @param table Pointer to the table struct to free resources for.
+ * @note If the msg is NULL, it will not print any message.
+ */
 void	exit_with_error(char	*msg, t_table *table)
 {
 	if (msg)
@@ -68,7 +89,13 @@ void	exit_with_error(char	*msg, t_table *table)
 	exit(EXIT_FAILURE);
 }
 
-void	free_resources(t_table *table)
+/**
+ * @brief Frees the resources allocated for the table struct.
+ * Destroys the mutexes for forks and philosophers,
+ * and frees the memory allocated for forks and philosophers.
+ * @param table Pointer to the table struct to free resources for.
+ */
+void	free_resources(t_table *table, t_bool destroy_mutexes)
 {
 	int	index;
 
@@ -94,10 +121,21 @@ void	free_resources(t_table *table)
 	}
 }
 
+/**
+ * @brief Returns a status message based on the philosopher's action.
+ * This function returns a string that describes the current status
+ * of a philosopher based on the provided status enum.
+ * It includes colored messages for better visibility
+ * and can switch to plain text messages if CSS is disabled.
+ * @param status The status of the philosopher.
+ * @return A string representing the status message.
+ * @note The function uses an array of strings to map each status
+ * to its corresponding message.
+ */
 char	*get_status_message(t_status status)
 {
-	char	*messages[6];
-	
+	char	*messages[7];
+
 	messages[TAKEN_FORKS] = " 🍴 has taken a fork";
 	messages[DEAD] = COLOR_RED " 💀 DIED" COLOR_RESET;
 	messages[TIMESTAMP] = COLOR_CYAN "⏳ %ld" COLOR_RESET;
@@ -115,5 +153,5 @@ char	*get_status_message(t_status status)
 		messages[SLEEPING] = " is sleeping";
 		messages[TAKEN_FORKS] = " has taken a fork";
 	}
-	return	(messages[status]);
+	return (messages[status]);
 }

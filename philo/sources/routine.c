@@ -6,12 +6,20 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:57:49 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 20:44:07 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include	"philo.h"
 
+/**
+ * @brief Processes the actions of a philosopher.
+ * This function encapsulates the actions of a philosopher
+ * in a single routine, allowing the philosopher to take forks,
+ * eat, release forks, sleep, and think in a loop
+ * until the simulation ends.
+ * @param philo Pointer to the philosopher struct.
+ */
 static void	process_actions(t_philo *philo)
 {
 	philo_take_forks(philo);
@@ -21,6 +29,14 @@ static void	process_actions(t_philo *philo)
 	philo_think(philo);
 }
 
+/**
+ * @brief The main routine for each philosopher thread.
+ * This function is executed by each philosopher thread.
+ * It handles the case where there is only one philosopher,
+ * and processes the actions of the philosopher in a loop
+ * until the simulation ends.
+ * @param arg Pointer to the philosopher struct.
+ */
 void	*philo_routine(void *arg)
 {
 	t_philo			*philo;
