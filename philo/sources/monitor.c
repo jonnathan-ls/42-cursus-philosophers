@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 20:43:27 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:35:27 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,9 +39,40 @@ static t_bool	philo_is_dead(t_philo *philo, t_table *table)
 	{
 		stop_simulation(table);
 		print_status(philo, DEAD);
+		if (CSS)
+		{
+			pthread_mutex_lock(&table->print_mutex);
+			printf(COLOR_RED "💀 Philosopher %d is dead after %lu ms\n"
+				COLOR_RESET, philo->id, time_difference);
+			pthread_mutex_unlock(&table->print_mutex);
+		}
 		return (TRUE);
 	}
 	return (FALSE);
+}
+
+/**
+ * @brief Stops the simulation and prints a message if all philosophers
+ * have eaten the required number of meals.
+ * This function is called when all philosophers
+ * have satisfied their meal requirements.
+ * It locks the print mutex to ensure thread-safe printing.
+ * @param table Pointer to the table struct containing the philosophers.
+ * @return TRUE indicating that the simulation has ended successfully.
+ */
+static t_bool	all_philos_satisfied(t_table *table)
+{
+	if (CSS)
+	{
+		pthread_mutex_lock(&table->print_mutex);
+		printf(COLOR_GREEN "✅ All philosophers have eaten %d meals.\n",
+			table->meals_required);
+		pthread_mutex_unlock(&table->print_mutex);
+		stop_simulation(table);
+	}
+	else
+		stop_simulation(table);
+	return (TRUE);
 }
 
 /**
@@ -77,11 +108,9 @@ static t_bool	should_end_dinner(t_philo *philos, t_table *table)
 				all_satisfied++;
 		}
 	}
-	if (table->meals_required != -1 && all_satisfied == table->num_philosophers)
-	{
-		stop_simulation(table);
-		return (TRUE);
-	}
+	if (table->meals_required != -1
+		&& all_satisfied == table->num_philosophers)
+		return (all_philos_satisfied(table));
 	return (FALSE);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 22:21:48 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/12 23:29:37 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -137,7 +137,7 @@ char	*get_status_message(t_status status)
 	char	*messages[7];
 
 	messages[TAKEN_FORKS] = " 🍴 has taken a fork";
-	messages[DEAD] = COLOR_RED " 💀 DIED" COLOR_RESET;
+	messages[DEAD] = COLOR_RED " ☠️  died" COLOR_RESET;
 	messages[TIMESTAMP] = COLOR_CYAN "⏱️  %ld" COLOR_RESET;
 	messages[PHILO_ID] = COLOR_MAGENTA " 🧛 %-3d" COLOR_RESET;
 	messages[EATING] = COLOR_GREEN " 🍝 is eating" COLOR_RESET;
