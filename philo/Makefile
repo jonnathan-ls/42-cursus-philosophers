@@ -6,7 +6,7 @@
 #    By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2025/05/24 12:02:46 by jlacerda          #+#    #+#              #
-#    Updated: 2025/06/08 16:28:55 by jlacerda         ###   ########.fr        #
+#    Updated: 2025/06/14 11:02:14 by jlacerda         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -32,7 +32,7 @@ CYAN = \033[36m
 WHITE = \033[37m
 
 TOTAL_FILES := $(words $(SRCS))
-BAR_LENGTH = $(TOTAL_FILES)
+BAR_LENGTH = 33
 COMPILED_COUNT = 0
 
 CSS ?= true
@@ -45,13 +45,12 @@ header:
 		echo; \
 		echo "$(MAGENTA)$(BOLD)🔥  P H I L O S O P H E R S$(RESET)"; \
 		echo "$(GREEN)$(BOLD)👥  Autor:$(RESET) $(YELLOW)jonnathan-ls$(RESET)"; \
-		echo; \
 	fi
 
 $(NAME): $(OBJS)
-	@printf "\n$(BLUE)$(BOLD)🔗  Linkando arquivos ...$(RESET)\n"
+	@printf "\n$(BLUE)$(BOLD)🔗  Linking files ...$(RESET)\n"
 	@$(CC) $(CFLAGS) -o $(NAME) $(OBJS)
-	@echo "$(GREEN)$(BOLD)🚀 Philosophers compilado com sucesso!$(RESET)"
+	@echo "$(GREEN)$(BOLD)🚀  Philosophers compiled successfully!$(RESET)"
 	@echo
 	@rm -f .header_lock
 
@@ -66,40 +65,43 @@ else
 endif
 	@if [ $(COMPILED_COUNT) -eq 1 ]; then \
 		echo ""; \
-		printf "$(BLUE)$(BOLD)🏗️   Compilando Philosophers $(RESET)\n"; \
+		printf "$(BLUE)$(BOLD)🏗️   Building Philosophers $(RESET)\n"; \
 	fi
 	@if [ $(COMPILED_COUNT) -gt 1 ]; then \
 		printf "\033[2A\r"; \
+		printf "                                                       \r"; \
 	fi
 
-	@printf "$(CYAN)$(BOLD)📄  Processando $(RESET)($(COMPILED_COUNT)/$(TOTAL_FILES)) \
+	@printf "$(CYAN)$(BOLD)📄  Processing $(RESET)($(COMPILED_COUNT)/$(TOTAL_FILES)) \
 	$(CYAN)$(SHORT_PATH)$(RESET)%*s\r\n" $$(( 60 - $${#SHORT_PATH} )) " "
 	@$(eval FILLED=$(shell echo $$(($(COMPILED_COUNT)*$(BAR_LENGTH)/$(TOTAL_FILES)))))
 	@printf "$(YELLOW)$(BOLD)🔄  $(RESET)$(YELLOW)%s$(RESET) \n" "$(shell printf '▓%.0s' $$(seq 1 $(FILLED)))"
 
 	@if [ $(COMPILED_COUNT) -eq $(TOTAL_FILES) ]; then \
-		sleep 0.3; \
+		sleep 0.25; \
 		printf "\033[3A\r"; \
-		printf "                                                              \r"; \
-		printf "$(BLUE)$(BOLD)🏗️   Compilando o programa $(GREEN)$(BOLD)✓ Concluído!$(RESET)\n"; \
-		printf "$(CYAN)$(BOLD)📄  Processando $(RESET)($(COMPILED_COUNT)/$(TOTAL_FILES)) \
+		printf "                                                       \r"; \
+		printf "$(BLUE)$(BOLD)🏗️   Building the program $(GREEN)$(BOLD)✓ Completed!$(RESET)\n"; \
+		printf "                                                       \r"; \
+		printf "$(CYAN)$(BOLD)📄  Processing $(RESET)($(COMPILED_COUNT)/$(TOTAL_FILES)) \
 		$(CYAN)$(SHORT_PATH)$(RESET)%*s\n" $$(( 60 - $${#SHORT_PATH} )) " "; \
 		printf "$(YELLOW)$(BOLD)🔄  $(RESET)$(YELLOW)%s$(RESET) \n" "$(shell printf '▓%.0s' $$(seq 1 $(FILLED)))"; \
 	fi
 
+
 clean: header
-	@printf "$(MAGENTA)$(BOLD)🗑️   Limpando arquivos objeto $(RESET)"
+	@printf "\n$(MAGENTA)$(BOLD)🗑️   Cleaning up object files $(RESET)"
 	@rm -rf $(OBJS_DIR)
-	@echo "$(GREEN)$(BOLD)✓ Objetos removidos!$(RESET)"
+	@echo "$(GREEN)$(BOLD)✓ Removed objects!$(RESET)\n"
 	@rm -f .header_lock
 
 fclean: header
-	@printf "$(MAGENTA)$(BOLD)🗑️   Limpando arquivos objeto $(RESET)"
+	@printf "\n$(MAGENTA)$(BOLD)🗑️   Cleaning up object files $(RESET)"
 	@rm -rf $(OBJS_DIR)
-	@echo "$(GREEN)$(BOLD)✓ Concluído!$(RESET)"
-	@printf "$(MAGENTA)$(BOLD)🗑️   Limpando executável $(RESET)"
+	@echo "$(GREEN)$(BOLD)✓ Completed!$(RESET)"
+	@printf "$(MAGENTA)$(BOLD)🗑️   Cleaning executable $(RESET)"
 	@rm -f $(NAME)
-	@echo "$(GREEN)$(BOLD)✓ Concluído!$(RESET)"
+	@echo "$(GREEN)$(BOLD)✓ Completed!$(RESET)"
 	@rm -f .header_lock
 	@echo
 
@@ -112,14 +114,14 @@ valgrind: fclean
 	@make CFLAGS="-Wall -Wextra -Werror -g -I$(INCS_DIR)" --no-print-directory -s
 
 helgrind: valgrind
-	@echo "$(BLUE)$(BOLD)🔍 Analisando race conditions com Helgrind ...$(RESET)"
+	@echo "$(BLUE)$(BOLD)🔍 Analyzing race conditions with Helgrind ...$(RESET)"
 	@valgrind -s \
 	--track-fds=yes \
 	--tool=helgrind \
 	./$(NAME) $(ARGS)
 
 memcheck: valgrind
-	@echo "$(BLUE)$(BOLD)🔍 Analisando vazamentos de memória com Memcheck ...$(RESET)"
+	@echo "$(BLUE)$(BOLD)🔍 Analyzing memory leaks with Memcheck ...$(RESET)"
 	@valgrind -s \
 	--tool=memcheck \
 	--leak-check=full \
