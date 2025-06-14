@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/13 21:30:33 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/14 11:20:08 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@
 # define MIN_TIME_IN_MS 60
 # define INT_SIZE_LENGTH 11
 # define INT_MAX 2147483647
-# define MARGIN_ERR_DEAD_MS 1
+# define MARGIN_ERR_DEAD_MS 5
 
 # define COLOR_RED "\033[31m"
 # define COLOR_CYAN "\033[36m"
