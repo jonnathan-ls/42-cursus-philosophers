@@ -6,11 +6,11 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 23:35:27 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:31:06 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"philo.h"
+#include "philo.h"
 
 /**
  * @brief Checks if a philosopher is dead.
@@ -65,7 +65,7 @@ static t_bool	all_philos_satisfied(t_table *table)
 	if (CSS)
 	{
 		pthread_mutex_lock(&table->print_mutex);
-		printf(COLOR_GREEN "✅ All philosophers have eaten %d meals.\n",
+		printf(COLOR_GREEN "✅ All philosophers have eaten %ld meals.\n",
 			table->meals_required);
 		pthread_mutex_unlock(&table->print_mutex);
 		stop_simulation(table);

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 20:46:25 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:30:33 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,9 @@
 # define FAILURE 1
 # define NO_PHILOS 0
 # define MAX_PHILOS 200
-# define MAX_TIME_IN_MS 60
+# define MIN_TIME_IN_MS 60
+# define INT_SIZE_LENGTH 11
+# define INT_MAX 2147483647
 # define MARGIN_ERR_DEAD_MS 1
 
 # define COLOR_RED "\033[31m"
@@ -39,9 +41,7 @@
 # define DESCRIPTION_ERR_MSG	"Considerations: \n     \
 - <argument> means required arguments.\n     \
 - [argument] means optional arguments.\n     \
-- All arguments must be positive integers.\n     \
-- The number of philosophers must be greater than 0.\n     \
-- The time to die, eat, and sleep must be equal or greater than 60ms.\n"
+- All arguments must be positive integers.\n"
 # define INVALID_ARGS_ERR_MSG	"Error: Invalid arguments\n"
 # define CORRECTLY_PROMPT_MSG	"Correctly prompt ./philo <number_of_philos> \
 <time_to_die> <time_to_eat> <time_to_sleep> [number_of_meals]\n"
@@ -50,7 +50,11 @@ Number of philosophers must be greater than 0\n"
 # define NUM_PHILOS_SIZE_ERR_MSG	"Error: \
 Number of philosophers must be less than 200\n"
 # define TIME_ARG_ERR_MSG	"Error: \
-The timestamp arguments must be greater than 60ms\n"
+The timestamp arguments must be greater than 60ms \
+and less than or equal to INT_MAX\n"
+# define MEALS_REQUIRED_ERR_MSG	"Error: \
+The number of meals required must be greater than 0 \
+and less than or equal to INT_MAX\n"
 # define THREAD_CREATE_ERR_MSG	"Error: pthread_create() failure\n"
 # define GET_TIME_ERR_MSG	"Error: gettimeofday() failure\n"
 # define TIME_EVAL_VALUES_ERR_MSG	"Error: timeval values are invalid "

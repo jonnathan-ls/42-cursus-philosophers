@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 21:18:06 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:25:19 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,16 @@ static void	validate_args_values(t_table *table)
 		exit_with_error(NUM_PHILOS_ERR_MSG, table);
 	if (table->num_philosophers > MAX_PHILOS)
 		exit_with_error(NUM_PHILOS_SIZE_ERR_MSG, table);
-	if (table->time_to_die < MAX_TIME_IN_MS
-		|| table->time_to_eat < MAX_TIME_IN_MS
-		|| table->time_to_sleep < MAX_TIME_IN_MS)
+	if (table->time_to_die < MIN_TIME_IN_MS
+		|| table->time_to_eat < MIN_TIME_IN_MS
+		|| table->time_to_sleep < MIN_TIME_IN_MS
+		|| table->time_to_die > INT_MAX
+		|| table->time_to_eat > INT_MAX
+		|| table->time_to_sleep > INT_MAX)
 		exit_with_error(TIME_ARG_ERR_MSG, table);
+	printf("meals_required: %ld\n", table->meals_required);
+	if (table->meals_required == 0 || table->meals_required > INT_MAX)
+		exit_with_error(MEALS_REQUIRED_ERR_MSG, table);
 }
 
 /**

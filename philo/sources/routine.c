@@ -6,11 +6,11 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 20:44:07 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:31:18 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include	"philo.h"
+#include "philo.h"
 
 /**
  * @brief Processes the actions of a philosopher.

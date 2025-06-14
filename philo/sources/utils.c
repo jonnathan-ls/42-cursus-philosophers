@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 23:29:37 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:31:46 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ int	is_valid_args(int argc, char **argv)
 {
 	int	i;
 	int	j;
+	int	len;
 
 	if (argc < 5 || argc > 6)
 		return (FALSE);
@@ -61,6 +62,11 @@ int	is_valid_args(int argc, char **argv)
 	while (i < argc)
 	{
 		j = 0;
+		len = 0;
+		while (argv[i][len])
+			len++;
+		if (len == 0 || len > INT_SIZE_LENGTH)
+			return (FALSE);
 		while (argv[i][j])
 		{
 			if ((argv[i][j] < '0' || argv[i][j] > '9') && argv[i][j] != '+')

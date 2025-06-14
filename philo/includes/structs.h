@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/19 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/07 21:01:10 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 21:13:01 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ typedef struct s_table
 	uint64_t		time_to_die;
 	uint64_t		time_to_eat;
 	uint64_t		time_to_sleep;
-	int				meals_required;
-	int				num_philosophers;
+	long			meals_required;
+	long			num_philosophers;
 	uint64_t		start_dinner_time;
 	t_bool			dinner_in_progress;
 }	t_table;
