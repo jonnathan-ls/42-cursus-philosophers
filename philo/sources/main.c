@@ -33,7 +33,6 @@ static void	validate_args_values(t_table *table)
 		|| table->time_to_eat > INT_MAX
 		|| table->time_to_sleep > INT_MAX)
 		exit_with_error(TIME_ARG_ERR_MSG, table);
-	printf("meals_required: %ld\n", table->meals_required);
 	if (table->meals_required == 0 || table->meals_required > INT_MAX)
 		exit_with_error(MEALS_REQUIRED_ERR_MSG, table);
 }

@@ -6,7 +6,7 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/05/24 13:18:28 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/13 21:31:18 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:03:18 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,7 @@ static void	process_actions(t_philo *philo)
 	philo_eat(philo);
 	philo_release_forks(philo);
 	philo_sleep(philo);
-	philo_think(philo);
+	print_status(philo, THINKING);
 }
 
 /**

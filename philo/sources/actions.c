@@ -6,11 +6,38 @@
 /*   By: jlacerda <jlacerda@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2025/06/07 11:48:17 by jlacerda          #+#    #+#             */
-/*   Updated: 2025/06/12 20:38:43 by jlacerda         ###   ########.fr       */
+/*   Updated: 2025/06/13 23:18:15 by jlacerda         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "philo.h"
+
+/**
+	* @brief Sleeps for a specified duration in milliseconds,
+	* checking periodically if the simulation should continue.
+	* This allows the simulation to be stopped gracefully
+	* while a philosopher is sleeping.
+	* @param table Pointer to the table struct containing the philosophers.
+	* @param time_in_ms The duration to sleep in milliseconds.
+	* @return TRUE if the sleep was completed
+	* without interruption, FALSE otherwise.
+	*/
+t_bool	sleep_with_check(t_table *table, uint64_t time_in_ms)
+{
+	uint64_t	start_time;
+	uint64_t	elapsed_time;
+
+	elapsed_time = 0;
+	start_time = get_current_time_in_ms();
+	while (elapsed_time < time_in_ms)
+	{
+		if (!should_continue(table))
+			return (FALSE);
+		sleep_in_ms(5);
+		elapsed_time = get_current_time_in_ms() - start_time;
+	}
+	return (TRUE);
+}
 
 /**
  * @brief Locks the forks for the philosopher to eat.
@@ -52,10 +79,12 @@ void	philo_eat(t_philo *philo)
 	philo->last_meal_time = get_current_time_in_ms();
 	pthread_mutex_unlock(&philo->meal_mutex);
 	print_status(philo, EATING);
-	sleep_in_ms(table->time_to_eat);
-	pthread_mutex_lock(&philo->meal_mutex);
-	philo->meals_eaten++;
-	pthread_mutex_unlock(&philo->meal_mutex);
+	if (sleep_with_check(table, table->time_to_eat) && should_continue(table))
+	{
+		pthread_mutex_lock(&philo->meal_mutex);
+		philo->meals_eaten++;
+		pthread_mutex_unlock(&philo->meal_mutex);
+	}
 }
 
 /**
@@ -91,17 +120,5 @@ void	philo_sleep(t_philo *philo)
 
 	table = philo->table;
 	print_status(philo, SLEEPING);
-	sleep_in_ms(table->time_to_sleep);
-}
-
-/**
- * @brief Philosopher thinks for a short duration.
- * This simulates the time the philosopher spends thinking between meals.
- * The philosopher will not be able to eat or sleep during this time.
- * @param philo Pointer to the philosopher struct.
- */
-void	philo_think(t_philo *philo)
-{
-	print_status(philo, THINKING);
-	sleep_in_ms(1);
+	sleep_with_check(table, table->time_to_sleep);
 }
